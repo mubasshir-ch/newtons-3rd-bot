@@ -19,7 +19,7 @@ client = commands.Bot(command_prefix = '-', intents=intents)
 
 async def dm_function(content):
     for s in students:
-        await s.send(content)
+        await s.send(embed=content)
 
 @client.event
 async def on_ready():
