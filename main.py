@@ -58,7 +58,7 @@ async def create(ctx):
         join_URL = y["join_url"]
         meetingPassword = y["password"]
         topic = y["topic"]
-        embed = discord.Embed(title = topic, description = "Ignore this link", color = 0x39b0fa)
+        embed = discord.Embed(title = topic, color = 0x39b0fa)
         embed.set_thumbnail(url = pho.icon_url)
         embed.add_field(name="JoinURL",value=join_URL,inline=False)
         embed.add_field(name="Password",value=meetingPassword,inline=False)
