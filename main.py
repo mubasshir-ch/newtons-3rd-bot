@@ -4,14 +4,13 @@ import discord
 from discord import client
 from discord.ext import commands
 from pytz import timezone
-import time
 import datetime
 import zoomdis
 import classSchedule
 from classSchedule import CClass
-# from flask import Flask
-# from flask.helpers import send_file
+import os, dotenv
 
+dotenv.load_dotenv()
 UTC = timezone("Asia/Dhaka")
 
 intents = discord.Intents().all()
@@ -26,15 +25,15 @@ async def on_ready():
     print('Apple landed on head!')
     #global variabls 
     global pho
-    pho = client.get_guild(864506014249517136)
+    pho = client.get_guild(os.getenv("PHO_GUILD_ID"))
     global phoGeneralText
-    phoGeneralText =await client.fetch_channel(864506014249517139)
+    phoGeneralText =await client.fetch_channel(os.getenv("PHO_GENERAL_TEXT_ID"))
     global phoGeneralVoice
-    phoGeneralVoice = await client.fetch_channel(864506014249517140)
+    phoGeneralVoice = await client.fetch_channel(os.getenv("PHO_GENERAL_VOICE_ID"))
     global askm
-    askm = await pho.fetch_member(499214665495216138)
+    askm = await pho.fetch_member(os.getenv("ASKM_USER_ID"))
     global hackermub
-    hackermub = await pho.fetch_member(563972166304137216)
+    hackermub = await pho.fetch_member(os.getenv("HACKERMUB_USER_ID"))
     global students
     students = await pho.fetch_members().flatten()
     students.remove(askm)
@@ -132,11 +131,10 @@ async def classReminder():
         if not classSchedule.classes:
             await asyncio.sleep(1)
 
-# app = Flask('app')
-
 if __name__ == "__main__":
-    TOKEN = "ODg2NjkxODk1MjA2NjI1MzUw.YT5SLQ.gsNqYQvjJRX_89DS7xCYgy5Cd4s"
+    TOKEN = os.getenv("DISCORD_BOT_TOKEN") 
     classSchedule.loadClasses()
     client.loop.create_task(classReminder())
     # app.run(host='0.0.0.0', port=6969)
     client.run(TOKEN)
+
